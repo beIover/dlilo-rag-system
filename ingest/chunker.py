@@ -33,7 +33,7 @@ logger = logging.getLogger(__name__)
 # ─── Tokenisation (word-level approximation, no heavy dep) ───────────────────
 
 def _approx_tokens(text: str) -> int:
-    """Approximate token count: split on whitespace + punctuation."""
+    """Approximate token count: split on whitespace."""
     return len(re.findall(r"\S+", text))
 
 
