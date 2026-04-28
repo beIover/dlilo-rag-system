@@ -32,6 +32,18 @@ def run_ingestion(
     chunk_size = chunk_size or config.CHUNK_SIZE_TOKENS
     overlap = overlap or config.CHUNK_OVERLAP_TOKENS
 
+    if chunk_size < 100 or chunk_size > 512:
+        logger.warning("Chunk size %d outside recommended range (100-512).", chunk_size)
+    min_overlap = int(chunk_size * 0.1)
+    max_overlap = int(chunk_size * 0.25)
+    if overlap < min_overlap or overlap > max_overlap:
+        logger.warning(
+            "Overlap %d outside recommended range (%d-%d).",
+            overlap,
+            min_overlap,
+            max_overlap,
+        )
+
     docs = load_directory(raw_dir or config.RAW_DIR, recursive=True)
     if not docs:
         logger.warning("No documents found in %s", raw_dir or config.RAW_DIR)
