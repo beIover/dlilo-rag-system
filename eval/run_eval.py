@@ -45,12 +45,23 @@ def _sentence_split(text: str) -> list[str]:
     return [s.strip() for s in text.replace("\n", " ").split(".") if s.strip()]
 
 
+def _tokenize(text: str) -> list[str]:
+    return [t.lower() for t in text.split() if t.strip()]
+
+
 def _faithfulness(answer: str, context: str) -> float:
     sentences = _sentence_split(answer)
     if not sentences:
         return 0.0
-    context_lower = context.lower()
-    supported = sum(1 for s in sentences if s.lower() in context_lower)
+    context_tokens = set(_tokenize(context))
+    supported = 0
+    for sentence in sentences:
+        tokens = _tokenize(sentence)
+        if not tokens:
+            continue
+        overlap = len(context_tokens.intersection(tokens)) / len(tokens)
+        if overlap >= 0.6:
+            supported += 1
     return supported / len(sentences)
 
 

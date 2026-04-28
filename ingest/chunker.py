@@ -88,6 +88,13 @@ def chunk_fixed(
         chunks[-1]["text"] = f"{chunks[-1]['text']} {tail['text']}".strip()
         chunks[-1]["token_count"] += tail["token_count"]
 
+    if chunks and chunks[-1]["token_count"] < min_tokens:
+        logger.warning(
+            "Small final chunk (%d tokens) kept for %s.",
+            chunks[-1]["token_count"],
+            doc.get("source", "unknown"),
+        )
+
     logger.debug("Fixed chunking: %s → %d chunks", doc["source"], len(chunks))
     return chunks
 

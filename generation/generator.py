@@ -16,7 +16,8 @@ SYSTEM_PROMPT = (
     "You are a RAG assistant. Use ONLY the provided context to answer the question. "
     "Cite the source document name for every factual claim. "
     "If the answer is not supported by the context, respond exactly with: "
-    "'I cannot find this in the provided documents.'"
+    "I cannot find this in the provided documents. "
+    "Do not add quotation marks."
 )
 
 
