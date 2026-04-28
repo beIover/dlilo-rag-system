@@ -55,4 +55,5 @@ data/raw/      # knowledge base documents
 
 - The evaluation dataset is in `eval/qa_dataset.json` and includes 30 QA pairs.
 - The experiment log is in `eval/experiment_log.csv`.
+- The technical report summary PDF is in `reports/technical_report.pdf`.
 - The `mock` LLM provider is useful for offline testing (returns a refusal).

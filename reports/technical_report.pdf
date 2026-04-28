@@ -1,0 +1,36 @@
+%PDF-1.4
+1 0 obj<< /Type /Catalog /Pages 2 0 R >>endobj
+2 0 obj<< /Type /Pages /Kids [3 0 R] /Count 1 >>endobj
+3 0 obj<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>endobj
+4 0 obj<< /Length 662 >>stream
+BT
+/F1 12 Tf
+72 760 Td
+(DLILO RAG System Technical Report \(Summary\)) Tj
+0 -18 Td
+(Architecture: ingestion -> chunking -> embeddings -> FAISS -> retrieval -> generation.) Tj
+0 -18 Td
+(Chunking comparison: sentence chunks improved precision@5 vs fixed \(see experiment_log.csv\).) Tj
+0 -18 Td
+(Evaluation: precision@5, answer relevance, faithfulness \(run eval/run_eval.py\).) Tj
+0 -18 Td
+(GPT-2 vs BERT: BERT-style encoders for retrieval, GPT-style decoders for generation.) Tj
+0 -18 Td
+(Limitations: small demo corpus, heuristic evaluation, dependence on external LLMs.) Tj
+0 -18 Td
+(Reflection: expand corpus, add RAGAS, improve guardrails and caching.) Tj
+ET
+endstream endobj
+5 0 obj<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000056 00000 n 
+0000000111 00000 n 
+0000000235 00000 n 
+0000000946 00000 n 
+trailer<< /Size 6 /Root 1 0 R >>
+startxref
+1014
+%%EOF
