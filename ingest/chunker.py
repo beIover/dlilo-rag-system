@@ -146,6 +146,20 @@ def chunk_sentence(
             if chunks:
                 chunks[-1]["text"] = f"{chunks[-1]['text']} {text}".strip()
                 chunks[-1]["token_count"] += tok
+            else:
+                logger.warning(
+                    "Small initial chunk (%d tokens) kept for %s.",
+                    tok,
+                    doc.get("source", "unknown"),
+                )
+                chunks.append({
+                    **{k: doc[k] for k in ("source", "title", "date", "doc_type")},
+                    "text": text,
+                    "chunk_index": idx,
+                    "strategy": "sentence",
+                    "token_count": tok,
+                })
+                idx += 1
             return
         chunks.append({
             **{k: doc[k] for k in ("source", "title", "date", "doc_type")},
