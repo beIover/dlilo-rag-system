@@ -38,7 +38,8 @@ def cmd_index(args):
     import json
     from retrieval.retriever import build_index
 
-    chunk_path = config.PROCESSED_DIR / f"chunks_{args.strategy}.json"
+    strategy = args.strategy if args.strategy in {"fixed", "sentence"} else config.EFFECTIVE_CHUNKING_STRATEGY
+    chunk_path = config.PROCESSED_DIR / f"chunks_{strategy}.json"
     if not chunk_path.exists():
         logger.error("Chunks file not found: %s. Run 'python main.py ingest' first.", chunk_path)
         sys.exit(1)
