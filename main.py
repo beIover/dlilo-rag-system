@@ -38,7 +38,7 @@ def cmd_index(args):
     import json
     from retrieval.retriever import build_index
 
-    chunk_path = config.DATA_DIR / f"chunks_{args.strategy}.json"
+    chunk_path = config.PROCESSED_DIR / f"chunks_{args.strategy}.json"
     if not chunk_path.exists():
         logger.error("Chunks file not found: %s. Run 'python main.py ingest' first.", chunk_path)
         sys.exit(1)
@@ -56,7 +56,7 @@ def cmd_query(args):
     from generation.generator import RAGGenerator
 
     # Rebuild or load
-    chunk_path = config.DATA_DIR / f"chunks_{config.CHUNKING_STRATEGY}.json"
+    chunk_path = config.PROCESSED_DIR / f"chunks_{config.EFFECTIVE_CHUNKING_STRATEGY}.json"
     if not chunk_path.exists():
         from ingest.pipeline import run_ingestion
         run_ingestion()
@@ -112,7 +112,7 @@ def main():
         description="RAG Chatbot — NLP Knowledge Base",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
-    parser.add_argument("--strategy", choices=["fixed", "sentence"], default=config.CHUNKING_STRATEGY)
+    parser.add_argument("--strategy", choices=["fixed", "sentence", "both"], default=config.CHUNKING_STRATEGY)
     parser.add_argument("--chunk-size", type=int, default=config.CHUNK_SIZE_TOKENS)
     parser.add_argument("--overlap", type=int, default=config.CHUNK_OVERLAP_TOKENS)
 

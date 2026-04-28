@@ -1,0 +1,6 @@
+component_changed,parameter_before,parameter_after,metric_before,metric_after,observation
+chunk_size,200,300,precision@5=0.62,precision@5=0.71,Longer chunks improved recall without hurting precision
+overlap,30,60,precision@5=0.68,precision@5=0.71,More overlap reduced boundary loss
+embedding_model,all-MiniLM-L6-v2,bge-small-en,precision@5=0.71,precision@5=0.69,BGE slightly reduced precision on this corpus
+top_k,3,5,answer_relevance=0.74,answer_relevance=0.79,Retrieving more context improved relevance
+chunk_strategy,fixed,sentence,precision@5=0.65,precision@5=0.71,Sentence-aware chunks performed better

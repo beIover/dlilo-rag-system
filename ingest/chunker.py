@@ -47,6 +47,7 @@ def chunk_fixed(
     doc: dict,
     chunk_size: int = 300,
     overlap: int = 60,
+    min_tokens: int = 100,
 ) -> list[dict]:
     """
     Split doc['text'] into fixed-size token windows with overlap.
@@ -82,6 +83,11 @@ def chunk_fixed(
             break
         start += chunk_size - overlap
 
+    if chunks and chunks[-1]["token_count"] < min_tokens and len(chunks) > 1:
+        tail = chunks.pop()
+        chunks[-1]["text"] = f"{chunks[-1]['text']} {tail['text']}".strip()
+        chunks[-1]["token_count"] += tail["token_count"]
+
     logger.debug("Fixed chunking: %s → %d chunks", doc["source"], len(chunks))
     return chunks
 
@@ -107,6 +113,7 @@ def chunk_sentence(
     doc: dict,
     target_size: int = 300,
     overlap: int = 50,
+    min_tokens: int = 100,
 ) -> list[dict]:
     """
     Split doc['text'] sentence-by-sentence, merging into chunks of ~target_size tokens.
@@ -135,7 +142,10 @@ def chunk_sentence(
         nonlocal idx
         text = " ".join(sents)
         tok = _approx_tokens(text)
-        if tok < 20:   # skip trivially short chunks
+        if tok < min_tokens:
+            if chunks:
+                chunks[-1]["text"] = f"{chunks[-1]['text']} {text}".strip()
+                chunks[-1]["token_count"] += tok
             return
         chunks.append({
             **{k: doc[k] for k in ("source", "title", "date", "doc_type")},
@@ -202,12 +212,13 @@ def chunk_document(
     strategy: Literal["fixed", "sentence"] = "sentence",
     chunk_size: int = 300,
     overlap: int = 60,
+    min_tokens: int = 100,
 ) -> list[dict]:
     """Chunk a single document using the chosen strategy."""
     if strategy == "fixed":
-        return chunk_fixed(doc, chunk_size=chunk_size, overlap=overlap)
+        return chunk_fixed(doc, chunk_size=chunk_size, overlap=overlap, min_tokens=min_tokens)
     elif strategy == "sentence":
-        return chunk_sentence(doc, target_size=chunk_size, overlap=overlap)
+        return chunk_sentence(doc, target_size=chunk_size, overlap=overlap, min_tokens=min_tokens)
     else:
         raise ValueError(f"Unknown chunking strategy: {strategy!r}")
 
@@ -217,11 +228,18 @@ def chunk_documents(
     strategy: Literal["fixed", "sentence"] = "sentence",
     chunk_size: int = 300,
     overlap: int = 60,
+    min_tokens: int = 100,
 ) -> list[dict]:
     """Chunk a list of documents."""
     all_chunks = []
     for doc in docs:
-        chunks = chunk_document(doc, strategy=strategy, chunk_size=chunk_size, overlap=overlap)
+        chunks = chunk_document(
+            doc,
+            strategy=strategy,
+            chunk_size=chunk_size,
+            overlap=overlap,
+            min_tokens=min_tokens,
+        )
         all_chunks.extend(chunks)
     logger.info(
         "Chunking complete — strategy=%s, docs=%d, total_chunks=%d",

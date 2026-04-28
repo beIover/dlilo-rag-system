@@ -1,0 +1,182 @@
+[
+  {
+    "id": "q1",
+    "question": "What directory holds the raw documents?",
+    "answer": "Raw documents are stored under data/raw.",
+    "sources": ["platform_overview.md"]
+  },
+  {
+    "id": "q2",
+    "question": "Where are processed artifacts written?",
+    "answer": "Processed artifacts are written to data/processed.",
+    "sources": ["platform_overview.md"]
+  },
+  {
+    "id": "q3",
+    "question": "Which chunking strategies are implemented?",
+    "answer": "The system implements fixed-size chunks with overlap and sentence-aware recursive chunks.",
+    "sources": ["platform_overview.md"]
+  },
+  {
+    "id": "q4",
+    "question": "What is the default chunk size?",
+    "answer": "The default chunk size is 300 tokens.",
+    "sources": ["platform_overview.md"]
+  },
+  {
+    "id": "q5",
+    "question": "How many tokens of overlap are used by default?",
+    "answer": "The default overlap is 60 tokens.",
+    "sources": ["platform_overview.md"]
+  },
+  {
+    "id": "q6",
+    "question": "What is the minimum chunk size?",
+    "answer": "The minimum chunk size is 100 tokens.",
+    "sources": ["platform_overview.md"]
+  },
+  {
+    "id": "q7",
+    "question": "Which embedding model is used for chunks?",
+    "answer": "Chunks are encoded with sentence-transformers/all-MiniLM-L6-v2.",
+    "sources": ["platform_overview.md"]
+  },
+  {
+    "id": "q8",
+    "question": "What vector index type is used for storage?",
+    "answer": "Vectors are stored in a FAISS IndexFlatIP index.",
+    "sources": ["platform_overview.md"]
+  },
+  {
+    "id": "q9",
+    "question": "How many chunks are retrieved per query?",
+    "answer": "The retriever returns the top-5 most similar chunks.",
+    "sources": ["platform_overview.md"]
+  },
+  {
+    "id": "q10",
+    "question": "Which LLM providers are supported by the generator?",
+    "answer": "The generator supports OpenAI (gpt-4o-mini) and Ollama (llama3.1).",
+    "sources": ["platform_overview.md"]
+  },
+  {
+    "id": "q11",
+    "question": "What must the assistant say when the answer is not supported?",
+    "answer": "It must reply: 'I cannot find this in the provided documents.'",
+    "sources": ["platform_overview.md"]
+  },
+  {
+    "id": "q12",
+    "question": "Which UI library is used and what is the default port?",
+    "answer": "The UI uses Gradio and defaults to port 7860.",
+    "sources": ["platform_overview.md"]
+  },
+  {
+    "id": "q13",
+    "question": "Which evaluation metrics are tracked?",
+    "answer": "The system tracks precision@5, answer relevance, and faithfulness.",
+    "sources": ["platform_overview.md"]
+  },
+  {
+    "id": "q14",
+    "question": "What metadata is stored for each document during ingestion?",
+    "answer": "Each document stores the source filename, title, date, and document type.",
+    "sources": ["platform_overview.md"]
+  },
+  {
+    "id": "q15",
+    "question": "How do you run ingestion?",
+    "answer": "Run python main.py ingest.",
+    "sources": ["operations_faq.txt"]
+  },
+  {
+    "id": "q16",
+    "question": "How do you build the vector index?",
+    "answer": "Run python main.py index after ingestion.",
+    "sources": ["operations_faq.txt"]
+  },
+  {
+    "id": "q17",
+    "question": "How do you start the chat UI?",
+    "answer": "Run python main.py ui and open http://localhost:7860.",
+    "sources": ["operations_faq.txt"]
+  },
+  {
+    "id": "q18",
+    "question": "How do you run evaluation with generation metrics?",
+    "answer": "Use python main.py eval --with-generation.",
+    "sources": ["operations_faq.txt"]
+  },
+  {
+    "id": "q19",
+    "question": "Which environment variables are required for OpenAI?",
+    "answer": "Set OPENAI_API_KEY and optionally OPENAI_MODEL.",
+    "sources": ["operations_faq.txt"]
+  },
+  {
+    "id": "q20",
+    "question": "How do you switch chunking strategies?",
+    "answer": "Set CHUNKING_STRATEGY to fixed or sentence.",
+    "sources": ["operations_faq.txt"]
+  },
+  {
+    "id": "q21",
+    "question": "What is the default TOP_K for retrieval?",
+    "answer": "The default TOP_K is 5.",
+    "sources": ["operations_faq.txt"]
+  },
+  {
+    "id": "q22",
+    "question": "Where are FAISS indexes stored?",
+    "answer": "FAISS indexes are stored at data/processed/faiss.index.",
+    "sources": ["operations_faq.txt"]
+  },
+  {
+    "id": "q23",
+    "question": "Where are chunk files stored?",
+    "answer": "Chunk files are stored as data/processed/chunks_<strategy>.json.",
+    "sources": ["operations_faq.txt"]
+  },
+  {
+    "id": "q24",
+    "question": "What happens when the answer is not in the context?",
+    "answer": "The assistant responds with 'I cannot find this in the provided documents.'",
+    "sources": ["operations_faq.txt"]
+  },
+  {
+    "id": "q25",
+    "question": "Where should API keys be stored?",
+    "answer": "API keys must be stored in environment variables.",
+    "sources": ["security_guidelines.html"]
+  },
+  {
+    "id": "q26",
+    "question": "Should documents with personal data be ingested?",
+    "answer": "No, documents containing personal data should not be ingested.",
+    "sources": ["security_guidelines.html"]
+  },
+  {
+    "id": "q27",
+    "question": "How often should API keys be rotated?",
+    "answer": "API keys should be rotated every 90 days.",
+    "sources": ["security_guidelines.html"]
+  },
+  {
+    "id": "q28",
+    "question": "How long should the audit log be kept?",
+    "answer": "The audit log should be kept for 30 days.",
+    "sources": ["security_guidelines.html"]
+  },
+  {
+    "id": "q29",
+    "question": "What protocol should be used when calling external LLMs?",
+    "answer": "Use HTTPS for external LLM providers.",
+    "sources": ["security_guidelines.html"]
+  },
+  {
+    "id": "q30",
+    "question": "How should data access be restricted?",
+    "answer": "Restrict access using an allowlist of trusted users.",
+    "sources": ["security_guidelines.html"]
+  }
+]

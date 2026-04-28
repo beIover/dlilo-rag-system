@@ -1,0 +1,32 @@
+DLILO RAG System - Operations FAQ
+Updated: 2024-11-01
+
+Q: How do I run ingestion?
+A: Use the command `python main.py ingest`.
+
+Q: How do I build the vector index?
+A: Run `python main.py index` after ingestion.
+
+Q: How do I start the chat UI?
+A: Run `python main.py ui` and open http://localhost:7860.
+
+Q: How do I run evaluation with generation metrics?
+A: Use `python main.py eval --with-generation`.
+
+Q: Which environment variables are required for OpenAI?
+A: Set OPENAI_API_KEY and optionally OPENAI_MODEL.
+
+Q: How do I switch chunking strategies?
+A: Set CHUNKING_STRATEGY to fixed or sentence.
+
+Q: What is the default top-k for retrieval?
+A: The default TOP_K is 5.
+
+Q: Where are FAISS indexes stored?
+A: data/processed/faiss.index.
+
+Q: Where are chunk files stored?
+A: data/processed/chunks_<strategy>.json.
+
+Q: What happens when the answer is not in the context?
+A: The assistant should respond with "I cannot find this in the provided documents."
